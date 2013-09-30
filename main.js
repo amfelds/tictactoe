@@ -111,9 +111,17 @@ window.onload = function () {
 		return newBoard;
 	}
 	
-	var getOptimalMove = function(board, symbol) {
-		// 1. for each blank space (e.g. possible move)
-		var bestMove = {result: 'none', moveRow: -1, moveCol: -1};
+    // Takes in a virtual board and the symbol (X or O) for which to find the best move.
+    // Returns an object "bestMove" with three fields:
+    // 1. result = 'won | lost | stalemate'
+    // 2. row
+    // 3. col
+    // For debugging purposes, it takes in a symbol that is set to true only if it's a recursive call
+	var getOptimalMove = function(board, symbol, isRecursive) {
+	    // 1. for each blank space (e.g. possible move)
+	    var bestMove = { result: 'none', moveRow: -1, moveCol: -1 };
+	    var worstMove = { result: 'none', moveRow: -1, moveCol: -1};
+
 		for (var i=0; i<3; i++) {
 			for (var j=0; j<3; j++) {
 				if (board[i][j].symbol === 'none') {
@@ -127,14 +135,13 @@ window.onload = function () {
 						bestMove.result = 'won';
 						bestMove.moveRow = i;
 						bestMove.moveCol = j;
-						break;
+						return bestMove;
 					}
 					//	1.a.ii if board is at a stalemate, return "stalemate" + move
 					else if (moveResult === 'none') {
 						bestMove.result = "stalemate";
 						bestMove.moveRow = i;
 						bestMove.moveCol = j;
-						break;
 					}
 					else if (moveResult === 'not over') {
 					//	1.a.iv if game is not over, recursively call "makeOptimalMove" with current copy of board and opposite symbol; return "lost" if it returns "won" or "stalemate" + move if it returns "stalemate"
@@ -142,32 +149,40 @@ window.onload = function () {
 						if (symbol === 'X') opponentSymbol = 'O';
 						else opponentSymbol = 'X';
 						
-						var opponentOptimalMove = getOptimalMove(boardCopy, opponentSymbol);
+						var opponentOptimalMove = getOptimalMove(boardCopy, opponentSymbol, true);
 						if (opponentOptimalMove.result === 'lost') {
 							bestMove.result = 'won';
 							bestMove.moveRow = i;
 							bestMove.moveCol = j;
-							break;
+							return bestMove;
 						}
 						else if (opponentOptimalMove.result === 'stalemate') {
 							bestMove.result = 'stalemate';
 							bestMove.moveRow = i;
 							bestMove.moveCol = j;
-							break;
 						}
 						else {
-							bestMove.result = 'lost';
-							bestMove.moveRow = i;
-							bestMove.moveCol = j;
+						    worstMove.result = 'lost';
+						    worstMove.moveRow = i;
+						    worstMove.moveCol = j;
 						}
 					}
 					else {
-						bestMove.result = 'lost';
-						bestMove.moveRow = i;
-						bestMove.moveCol = j;
+					    worstMove.result = 'lost';
+					    worstMove.moveRow = i;
+					    worstMove.moveCol = j;
 					}
 				}
 			}
+		}
+
+		if (bestMove.result === 'none') {
+		    bestMove.result = worstMove.result;
+		    bestMove.moveRow = worstMove.moveRow;
+		    bestMove.moveCol = worstMove.moveCol;
+		}
+		if (!isRecursive) {
+		    console.log("Found a move at place " + bestMove.moveRow + ", " + bestMove.moveCol + ", expecting " + symbol + " " + bestMove.result);
 		}
 		return bestMove;
 	}
@@ -182,7 +197,7 @@ window.onload = function () {
 		}
 		
 		if (currPlayer.isAI === 'true') {
-			AImove = getOptimalMove(virtualBoard, currPlayer.symbol);
+			AImove = getOptimalMove(virtualBoard, currPlayer.symbol, false);
 			attemptMove(AImove.moveRow, AImove.moveCol);
 		}
 	}
