@@ -1,0 +1,17 @@
+#board {
+	display: inline-block;
+	float: center;
+	padding: 10%;
+}
+
+.boardsquare {
+	width: 50px;
+	height: 50px;
+	background-color:#008800;
+	text-align: center;
+}
+
+td {
+	vertical-align: center;
+}
+

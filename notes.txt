@@ -1,0 +1,39 @@
+--------
+Algorithm
+--------
+pseudocode:
+attemptMove function (input = square)
+	check if square is empty. if so,
+		write the symbol of the 'current player'
+		draw the "undo" button
+		check if game is over. if so, 
+			name winner (could be stalemate)
+			give person option to start over
+		if not,
+			toggle "current player" value
+	if not,
+		say something like "you can't play there!"
+		
+current player:
+	symbol = X or O
+	
+
+--------
+Architecture
+--------
+Need to keep track of a current player
+To start game: "Play a friend or play a computer?
+Need a way to reset or re-start game at any given time
+Need a way to set "winner" (either X, O, no one, or null)
+Need a way of displaying messages like "You can't do that!" or "X is the winner!"
+Need a "virtual board" that talks to the graphical (html) board (so I don't have to iterate over the DOM every time I want to check if a move is valid or if the game is over)
+Would be nice if the AI had a "thinking..." timer
+A cool Easter egg would be to have a button that says "i give up" and show a message like "the only winning move is not to play" alluding to that 80's movie with nuclear program AIs...
+
+
+--------
+Methods
+--------
+checkGameOver: looks at board, returns bool of true or false
+
+		
