@@ -111,160 +111,74 @@ window.onload = function () {
 		return newBoard;
 	}
 	
-    // Takes as input a "board" (virtual board to play imaginary moves on) and the symbol for which it's finding an optimal move. (an X or O)
-    // Returns a "bestMove" object, which has three fields: result, row, and col. 
-    // The "result" field is either 'win', 'lose', or 'stalemate'
-    // The row and col fields are the indices of the space that gets the result for the player of "symbol"
-    // (Assumes both players play optimally)
 	var getOptimalMove = function(board, symbol) {
-	    var bestMove = { result: 'none', row: -1, col: -1 };
-	    var stalemates = []; // TODO use this
-	    var blankspaces = []; // TODO use this
-
-	    var foundWinningMove = false;
-	    var i = 0;
-	    var j = 0;
-	    while (!foundWinningMove && i < 3 && j < 3) {
-	        if (board[i][j].isblank) {
-                // TODO: add this to blank spaces list
-	            // 1. make a copy of the board
-	            var boardCopy = copyBoard(board);
-	            // 2. current symbol makes an imaginary move on the copy of the board
-	            boardCopy[i][j].isblank = false;
-	            boardCopy[i][j].symbol = symbol;
-	            // 3. check the state of the game now - is it over?
-	            var imaginaryWinner = checkForWinner(boardCopy);
-	            //  3.a. if game is not over, "switch" current symbol, and call getOptimalMove from opponnent's perspective
-	            if (imaginaryWinner === 'not over') {
-	                var opponentSymbol;
-	                if (symbol === 'X') { opponentSymbol = 'O'; }
-	                else { opponentSymbol = 'X'; }
-	                var opponentOptimalMove = getOptimalMove(boardCopy, opponentSymbol);
-	                // if the result of that  = win, then my result = lose. keep looking.
-	                if (opponentOptimalMove.result = 'win') {
-	                    i++;
-	                    j++;
-	                }
-	                // if the result of that  = lose, then my result = win (yay! done looking!)
-	                else if (opponentOptimalMove.result === 'lose') {
-	                    bestMove.result = 'win';
-	                    bestMove.row = i;
-	                    bestMove.col = j;
-	                    foundWinningMove = true;
-	                }
-	                // if the result of that  = stalemate, then my result = stalemate. keep looking.
-	                else {
-                        // TODO: add this move to the stalemate options
-	                    i++;
-	                    j++;
-	                }
-	            }
-	            else {
-	                //  3.b. if game is over, check the result
-	                //  is the winning symbol the same as my symbol? if so, yay!
-	                if (imaginaryWinner === symbol) {
-	                    bestMove.result = 'win';
-	                    bestMove.row = i;
-	                    bestMove.col = j;
-	                    foundWinningMove = true;
-	                }
-	                // is there no winner? add to stalemate options...
-	                else if (imaginaryWinner === 'none') {
-	                    // TODO add this move to the stalemate options
-	                    i++;
-	                    j++;
-	                }
-	                // is the winning symbol not my symbol? :( keep looking...
-	                else {
-	                    i++;
-	                    j++;
-	                }
-	            }
-	        }
-	    }
-
-	    var foundStalemate = false;
-	    i = 0;
-	    j = 0;
-	    if (!foundWinningMove) {
-	        while (!foundStalemate && i < 3 && j < 3) {
-	            if (board[i][j].isblank) {
-	                var boardCopy = copyBoard(board);
-	                boardCopy[i][j].isblank = false;
-	                boardCopy[i][j].symbol = symbol;
-	                var imaginaryWinner = checkForWinner(boardCopy);
-	                if (imaginaryWinner === 'not over') {
-	                    var opponentSymbol;
-	                    if (symbol === 'X') { opponentSymbol = 'O'; }
-	                    else { opponentSymbol = 'X'; }
-	                    var opponentOptimalMove = getOptimalMove(boardCopy, opponentSymbol);
-	                    if (opponentOptimalMove.result = 'win') {
-	                        i++;
-	                        j++;
-	                    }
-	                    else if (opponentOptimalMove.result === 'lose') {
-	                        bestMove.result = 'win';
-	                        bestMove.row = i;
-	                        bestMove.col = j;
-	                        foundWinningMove = true;
-	                        i++;
-	                        j++;
-	                    }
-	                    else {
-	                        bestMove.result = 'stalemate';
-	                        bestMove.row = i;
-	                        bestMove.col = j;
-	                        foundStalemate = true;
-	                    }
-	                }
-	                else {
-	                    if (imaginaryWinner === symbol) {
-	                        bestMove.result = 'win';
-	                        bestMove.row = i;
-	                        bestMove.col = j;
-	                        foundWinningMove = true;
-	                    }
-	                    else if (imaginaryWinner === 'none') {
-	                        bestMove.result = 'stalemate';
-	                        bestMove.row = i;
-	                        bestMove.col = j;
-	                        foundStalemate = true;
-	                    }
-	                    else {
-	                        i++;
-	                        j++;
-	                    }
-	                }
-	            }
-	        }
-	    }
-
-	    var foundMove = false;
-	    i = 0;
-	    j = 0;
-	    if (!foundStalemate) {
-	        while (!foundMove && i < 3 && j < 3) {
-	            if (board[i][j].isblank) {
-	                bestMove.result = 'lose';
-	                bestMove.row = i;
-	                bestMove.col = j;
-	                foundMove = true;
-	            }
-	        }
-	    }
-
-	    return bestMove;
+		// 1. for each blank space (e.g. possible move)
+		var bestMove = {result: 'none', moveRow: -1, moveCol: -1};
+		for (var i=0; i<3; i++) {
+			for (var j=0; j<3; j++) {
+				if (board[i][j].symbol === 'none') {
+					// 	1.a. copy the input board, make move
+					boardCopy = copyBoard(board);
+					boardCopy[i][j].symbol = symbol;
+					boardCopy.isBlank = 'false';
+					moveResult = checkForWinner(boardCopy);
+					// 	1.a.i if input symbol won, return "won!" + move
+					if (moveResult === symbol) {
+						bestMove.result = 'won';
+						bestMove.moveRow = i;
+						bestMove.moveCol = j;
+						break;
+					}
+					//	1.a.ii if board is at a stalemate, return "stalemate" + move
+					else if (moveResult === 'none') {
+						bestMove.result = "stalemate";
+						bestMove.moveRow = i;
+						bestMove.moveCol = j;
+						break;
+					}
+					else if (moveResult === 'not over') {
+					//	1.a.iv if game is not over, recursively call "makeOptimalMove" with current copy of board and opposite symbol; return "lost" if it returns "won" or "stalemate" + move if it returns "stalemate"
+						var opponentSymbol;
+						if (symbol === 'X') opponentSymbol = 'O';
+						else opponentSymbol = 'X';
+						
+						var opponentOptimalMove = getOptimalMove(boardCopy, opponentSymbol);
+						if (opponentOptimalMove.result === 'lost') {
+							bestMove.result = 'won';
+							bestMove.moveRow = i;
+							bestMove.moveCol = j;
+							break;
+						}
+						else if (opponentOptimalMove.result === 'stalemate') {
+							bestMove.result = 'stalemate';
+							bestMove.moveRow = i;
+							bestMove.moveCol = j;
+							break;
+						}
+						else {
+							bestMove.result = 'lost';
+							bestMove.moveRow = i;
+							bestMove.moveCol = j;
+						}
+					}
+					else {
+						bestMove.result = 'lost';
+						bestMove.moveRow = i;
+						bestMove.moveCol = j;
+					}
+				}
+			}
+		}
+		return bestMove;
 	}
 	
 	var toggleCurrentPlayer = function() {
-	    console.log("Toggle player called.");
+		// TODO for now, all players are not AI
 		if (currPlayer === player1) {
-		    currPlayer = player2;
-		    console.log("Current player's AI status: " + currPlayer.isAI);
+			currPlayer = player2;
 		}
 		else {
-		    currPlayer = player1;
-		    console.log("Current player's AI status: " + currPlayer.isAI);
+			currPlayer = player1;
 		}
 		
 		if (currPlayer.isAI === 'true') {
@@ -274,7 +188,6 @@ window.onload = function () {
 	}
 	
 	var attemptMove = function (row, col) {
-	    console.log("Attempt move called!");
 		if (!isGameOver) {
 			if (virtualBoard[row][col].isblank === "true") {
 				// 1. Make the move
@@ -297,7 +210,8 @@ window.onload = function () {
 					alert("It's a stalemate, mate.");
 				}
 				else {
-					isGameOver = true;
+				    isGameOver = true;
+				    alert("Winner is " + winner);
 					// TODO: tell player who the winner is, disable clicking, offer a rematch
 				}
 			}
