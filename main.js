@@ -30,8 +30,14 @@ window.onload = function () {
 			}
 		}
 	}
+
+	var stubby = function () {
+	    alert("stubby called!");
+	}
 	
-	var startNewGame = function() {
+	var startNewGame = function () {
+	    isGameOver = true; // prevents person from playing on old game before they choose X's or O's
+
 		// 1. clear virtual and graphical boards
 		for (var i=0; i<3; i++) {
 			for (var j=0; j<3; j++) {
@@ -40,8 +46,8 @@ window.onload = function () {
 			}
 		}
 		drawBoard();
-		
-		// 2. ask person if they want to play x's or o's
+		 
+		// 2. reset players, and wait for click (set isGameOver to false after person chooses X or O)
 	}
 	
 	// TODO: to do the AI thing, this method should take in a Board as input
