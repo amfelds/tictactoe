@@ -1,10 +1,21 @@
+$(document).ready(function(){
+    $('a#XAI').click(function(){
+        $(this).toggleClass("down");
+        // TODO: change the text of the button and the value of player1.isAI
+    });
+    $('a#OAI').click(function(){
+        $(this).toggleClass("down");
+        // TODO: change the text of the button and the value of player2.isAI
+    });
+});
+
 window.onload = function () {
 	/*
 	 * INSTANTIATE the global(ish) variables
 	 */
 
 	var player1 = {symbol: 'X', isAI: 'false'}
-	var player2 = {symbol: 'O', isAI: 'true'}
+	var player2 = {symbol: 'O', isAI: 'false'}
 	var currPlayer = player1;
 	
 	var isGameOver = false;
@@ -194,6 +205,8 @@ window.onload = function () {
 			currPlayer = player1;
 		}
 		
+		document.getElementById("turnLabel").innerHTML = currPlayer.symbol + "'s turn";
+		
 		if (currPlayer.isAI === 'true') {
 			AImove = getOptimalMove(virtualBoard, currPlayer.symbol);
 			attemptMove(AImove.moveRow, AImove.moveCol);
@@ -220,11 +233,11 @@ window.onload = function () {
 					// TODO: it's a stalemate, alert the player, also disable clicking
 					// Also maybe disable game or show button to play again?
 					isGameOver = true;
-					alert("It's a stalemate, mate.");
+					document.getElementById("statuslabel").innerHTML = "It's a stalemate, mate. Play again?";
 				}
 				else {
 				    isGameOver = true;
-				    alert("Winner is " + winner);
+				    document.getElementById("statuslabel").innerHTML = "Winner is " + winner + "<br />Rematch?";
 					// TODO: tell player who the winner is, disable clicking, offer a rematch
 				}
 			}

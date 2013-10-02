@@ -9,35 +9,39 @@
 <body>
 <div id="header">
 	<h3>ticky tacky toe</h3>
-	<div id="turnLabel"></div>
+</div>
+<div id="controlpanel">
+	<h4><div id="statuslabel">Let the Games Begin!</div></h4>
+	<div id="turnLabel">X's turn</div>
+	<div id="Xlabel" class="playerlabel">PLAYER X: <a id="XAI" title="button">HOOMIN</a></div>
+	<div id="Olabel" class="playerlabel">PLAYER O: <a id="OAI" title="button">HOOMIN</a></div>
+	<button>erase game</button>
 </div>
 <div id="board">
 	<table>
 	<tr>
-	<td><a href="#"><div id="00" class="boardsquare top left"></div></a></td>
-	<td><a href="#"><div id="01" class="boardsquare top center"></div></a></td>
-	<td><a href="#"><div id="02" class="boardsquare top right"></div></a></td>
+	<td><div id="00" class="boardsquare top left"></div></td>
+	<td><div id="01" class="boardsquare top center"></div></td>
+	<td><div id="02" class="boardsquare top right"></div></td>
 	</tr>
 	<tr>
-	<td><a href="#"><div id="10" class="boardsquare middle left"></div></a></td>
-	<td><a href="#"><div id="11" class="boardsquare middle center"></div></a></td>
-	<td><a href="#"><div id="12" class="boardsquare middle right"></div></a></td>
+	<td><div id="10" class="boardsquare middle left"></div></td>
+	<td><div id="11" class="boardsquare middle center"></div></td>
+	<td><div id="12" class="boardsquare middle right"></div></td>
 	</tr>
 	<tr>
-	<td><a href="#"><div id="20" class="boardsquare bottom left"></div></a></td>
-	<td><a href="#"><div id="21" class="boardsquare bottom center"></div></a></td>
-	<td><a href="#"><div id="22" class="boardsquare bottom right"></div></a></td>
+	<td><div id="20" class="boardsquare bottom left"></div></td>
+	<td><div id="21" class="boardsquare bottom center"></div></td>
+	<td><div id="22" class="boardsquare bottom right"></div></td>
 	<tr>
 	</table>
 	
 	<svg class="mysvg" width="300px" height="300px" version="1.1">
-    <line x1="100" y1="0" x2="100" y2="300" style="stroke:rgb(245,245,245);stroke-width:10"/>
-    <line x1="200" y1="0" x2="200" y2="300" style="stroke:rgb(245,245,245);stroke-width:10"/>
-    <line x1="0" y1="100" x2="300" y2="0" style="stroke:rgb(245,245,245);stroke-width:10"/>
+    <line x1="100" y1="0" x2="100" y2="300" style="stroke:rgb(245,245,245);stroke-width:8"/>
+    <line x1="200" y1="0" x2="200" y2="300" style="stroke:rgb(245,245,245);stroke-width:8"/>
+    <line x1="0" y1="100" x2="300" y2="100" style="stroke:rgb(245,245,245);stroke-width:8"/>
+    <line x1="0" y1="200" x2="300" y2="200" style="stroke:rgb(245,245,245);stroke-width:8"/>
 </svg>
-</div>
-<div>
-
 </div>
 </body>
 </html>
