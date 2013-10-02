@@ -1,7 +1,12 @@
+body {
+	background-image: url('resources/Chalkboard.jpg');
+	background-size: 100%;
+}
+
 #board {
 	display: inline-block;
 	float: center;
-	padding: 10%;
+	padding: 2%;
 }
 
 .boardsquare {

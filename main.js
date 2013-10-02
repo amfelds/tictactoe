@@ -117,7 +117,7 @@ window.onload = function () {
     // 2. row
     // 3. col
     // For debugging purposes, it takes in a symbol that is set to true only if it's a recursive call
-	var getOptimalMove = function(board, symbol, isRecursive) {
+	var getOptimalMove = function(board, symbol) {
 	    // 1. for each blank space (e.g. possible move)
 	    var bestMove = { result: 'none', moveRow: -1, moveCol: -1 };
 	    var worstMove = { result: 'none', moveRow: -1, moveCol: -1};
@@ -181,9 +181,7 @@ window.onload = function () {
 		    bestMove.moveRow = worstMove.moveRow;
 		    bestMove.moveCol = worstMove.moveCol;
 		}
-		if (!isRecursive) {
-		    console.log("Found a move at place " + bestMove.moveRow + ", " + bestMove.moveCol + ", expecting " + symbol + " " + bestMove.result);
-		}
+
 		return bestMove;
 	}
 	
@@ -197,7 +195,7 @@ window.onload = function () {
 		}
 		
 		if (currPlayer.isAI === 'true') {
-			AImove = getOptimalMove(virtualBoard, currPlayer.symbol, false);
+			AImove = getOptimalMove(virtualBoard, currPlayer.symbol);
 			attemptMove(AImove.moveRow, AImove.moveCol);
 		}
 	}
