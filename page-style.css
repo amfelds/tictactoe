@@ -30,6 +30,7 @@ body {
 	height: 50px;
 	background-color:#008800;
 	text-align: center;
+	cursor: pointer;
 }
 
 a {
@@ -38,18 +39,18 @@ a {
     cursor: pointer;
     border-top: solid 2px #eaeaea;
     border-left: solid 2px #eaeaea;
-    border-bottom: solid 2px #777;
-    border-right: solid 2px #777;
+    border-bottom:solid 2px  #eaeaea;
+    border-right: solid 2px #eaeaea;
     padding: 5px 5px;   	
     }
 
 a.down {
 	color: black;
-    background: #bbb;
+    background: #aaa;
     border-top: solid 2px #777;
     border-left: solid 2px #777;
-    border-bottom:solid 2px  #eaeaea;
-    border-right: solid 2px #eaeaea;
+    border-bottom: solid 2px #777;
+    border-right: solid 2px #777;
     }
 
 td {

@@ -1,21 +1,10 @@
-$(document).ready(function(){
-    $('a#XAI').click(function(){
-        $(this).toggleClass("down");
-        // TODO: change the text of the button and the value of player1.isAI
-    });
-    $('a#OAI').click(function(){
-        $(this).toggleClass("down");
-        // TODO: change the text of the button and the value of player2.isAI
-    });
-});
-
 window.onload = function () {
 	/*
 	 * INSTANTIATE the global(ish) variables
 	 */
 
 	var player1 = {symbol: 'X', isAI: 'false'}
-	var player2 = {symbol: 'O', isAI: 'false'}
+	var player2 = {symbol: 'O', isAI: 'true'}
 	var currPlayer = player1;
 	
 	var isGameOver = false;
@@ -40,6 +29,23 @@ window.onload = function () {
 				}
 			}
 		}
+	}
+	
+	var togglePlayerType = function(player) {
+		// 1. toggle boolean value of player.isAI
+		player.isAI = !(player.isAI);
+		// 2. change css class of button
+		// TODO
+		// 3. change text of button
+		if (player.isAI) {
+			document.getElementById(player.symbol + "AI").innerHTML = "COMPOOTUR";
+		}
+		else {
+			document.getElementById(player.symbol + "AI").innerHTML = "HOOMIN";
+		}
+		
+		console.log("player1 AI: " + player1.isAI);
+		console.log("player2 AI: " + player2.isAI);
 	}
 	
 	var startNewGame = function() {
@@ -211,6 +217,9 @@ window.onload = function () {
 			AImove = getOptimalMove(virtualBoard, currPlayer.symbol);
 			attemptMove(AImove.moveRow, AImove.moveCol);
 		}
+		
+		console.log("player1 AI: " + player1.isAI);
+		console.log("player2 AI: " + player2.isAI);
 	}
 	
 	var attemptMove = function (row, col) {
@@ -269,6 +278,13 @@ window.onload = function () {
 			}();
 		}
 	}
+	
+	document.getElementById("XAI").onclick = function() {
+		togglePlayerType(player1);
+	};
+	document.getElementById("OAI").onclick = function() {
+		togglePlayerType(player2);
+	};
 	
 	/*
 	 * START the flow of control
