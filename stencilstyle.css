@@ -1,0 +1,52 @@
+﻿body
+{
+    color: white;
+    background-color: rgb(128, 128, 128);
+}
+
+.contentpanel
+{
+    float: left;
+    height: 100%;
+}
+
+#header
+{
+    text-align: center;
+    background-color: rgb(255, 0, 0);
+    margin: 20px;
+}
+
+#content
+{
+    width: 75%;
+    height: 450px;
+	margin: 0 auto;
+}
+
+#PlayerXPanel
+{
+    width: 16%;
+    background-color: rgb(0, 148, 255);
+}
+
+#board
+{
+    width: 68%;
+    background-color: rgb(182, 255, 0);
+}
+
+#PlayerOPanel
+{
+    width: 16%;
+    float: right;
+    background-color: rgb(178, 0, 255);
+}
+
+#footer
+{
+    clear: both;
+    text-align: center;
+    background-color: rgb(0,0,0);
+    margin: 20px;
+}
