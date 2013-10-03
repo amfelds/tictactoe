@@ -7,7 +7,7 @@
 table
 {
     margin:auto;
-    margin-top: 10%;
+    margin-top: 5%;
 }
 
 .contentpanel
@@ -29,8 +29,8 @@ table
 #header
 {
     text-align: center;
-    background-color: rgb(255, 0, 0);
     margin: 20px;
+    outline: white dashed 1px;
 }
 
 #content
@@ -43,26 +43,26 @@ table
 #PlayerXPanel
 {
     width: 16%;
-    background-color: rgb(0, 148, 255);
+    outline: white dashed 1px;
 }
 
 #board
 {
     width: 68%;
-    background-color: rgb(182, 255, 0);
+    outline: white dashed 1px;
 }
 
 #PlayerOPanel
 {
     width: 16%;
     float: right;
-    background-color: rgb(178, 0, 255);
+    outline: white dashed 1px;
 }
 
 #footer
 {
     clear: both;
     text-align: center;
-    background-color: rgb(0,0,0);
+    outline: white dashed 1px;
     margin: 20px;
 }

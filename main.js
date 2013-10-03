@@ -216,20 +216,18 @@ window.onload = function () {
                     toggleCurrentPlayer();
                 }
                 else if (winner === 'none') {
-                    // TODO: it's a stalemate, alert the player, also disable clicking
-                    // Also maybe disable game or show button to play again?
+                    // TODO:  change to better alert style, also disable clicking, offer to play again
                     isGameOver = true;
                     alert("It's a stalemate, mate.");
                 }
                 else {
                     isGameOver = true;
                     alert("Winner is " + winner);
-                    // TODO: tell player who the winner is, disable clicking, offer a rematch
+                    // TODO: change to better alert style, disable clicking, offer a rematch
                 }
             }
             else {
                 // TODO: display a message that says "nope, that spot is taken!"
-                alert("You can't click there!");
             }
         }
         else {
