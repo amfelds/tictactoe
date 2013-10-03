@@ -5,13 +5,36 @@
     <meta charset="utf-8" />
     <title>Stencil layout</title>
     <link rel="stylesheet" type="text/css" href="stencilstyle.css" />  
+    <script src="main.js" type="text/javascript"></script>
 </head>
 <body>
     <div id="header">Header</div>
     <div id="content">
-        <div id="PlayerXPanel" class="contentpanel">Player X</div>
-        <div id="board" class="contentpanel">Board</div>
-        <div id="PlayerOPanel" class="contentpanel">Player O</div>
+        <div id="PlayerXPanel" class="contentpanel">Player X
+            <div id="XAI">HOOMIN</div>
+        </div>
+        <div id="board" class="contentpanel">
+            <table>
+	            <tr>
+	                <td><div id="00" class="boardsquare top left"></div></td>
+	                <td><div id="01" class="boardsquare top center"></div></td>
+	                <td><div id="02" class="boardsquare top right"></div></td>
+	            </tr>
+	            <tr>
+	                <td><div id="10" class="boardsquare middle left"></div></td>
+	                <td><div id="11" class="boardsquare middle center"></div></td>
+	                <td><div id="12" class="boardsquare middle right"></div></td>
+	            </tr>
+	            <tr>
+	                <td><div id="20" class="boardsquare bottom left"></div></td>
+	                <td><div id="21" class="boardsquare bottom center"></div></td>
+	                <td><div id="22" class="boardsquare bottom right"></div></td>
+	            <tr>
+	        </table>
+        </div>
+        <div id="PlayerOPanel" class="contentpanel">Player O
+            <div id="OAI">HOOMIN</div>
+        </div>
     </div>
     <div id="footer">Footer</div>
 </body>

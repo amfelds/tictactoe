@@ -1,274 +1,265 @@
 window.onload = function () {
-	/*
+    /*
 	 * INSTANTIATE the global(ish) variables
 	 */
 
-	var player1 = {symbol: 'X', isAI: 'false'}
-	var player2 = {symbol: 'O', isAI: 'true'}
-	var currPlayer = player1;
-	
-	var isGameOver = false;
-	
-	var virtualBoard = [];
-	virtualBoard[0] = [];
-	virtualBoard[1] = [];
-	virtualBoard[2] = [];
-	
-	/*
+    var player1 = { symbol: 'X', isAI: 'false' }
+    var player2 = { symbol: 'O', isAI: 'true' }
+    var currPlayer = player1;
+
+    var isGameOver = false;
+
+    var virtualBoard = [];
+    virtualBoard[0] = [];
+    virtualBoard[1] = [];
+    virtualBoard[2] = [];
+
+    /*
 	 * DEFINE the helper functions
 	 */
-	 
-	var drawBoard = function() {
-		for (var i=0; i<3; i++) {
-			for (var j=0; j<3; j++) {
-				tempSymbol = virtualBoard[i][j].symbol;
-				if (tempSymbol !== 'none') {
-					divId = "" + i + j;
-					var tempdiv = document.getElementById(divId);
-					tempdiv.innerHTML = tempSymbol;
-				}
-			}
-		}
-	}
 
-	var stubby = function () {
-	    alert("stubby called!");
-	}
-	
-	var startNewGame = function () {
-	    isGameOver = true; // prevents person from playing on old game before they choose X's or O's
+    var drawBoard = function () {
+        for (var i = 0; i < 3; i++) {
+            for (var j = 0; j < 3; j++) {
+                tempSymbol = virtualBoard[i][j].symbol;
+                if (tempSymbol !== 'none') {
+                    divId = "" + i + j;
+                    var tempdiv = document.getElementById(divId);
+                    tempdiv.innerHTML = tempSymbol;
+                }
+            }
+        }
+    }
 
-		// 1. clear virtual and graphical boards
-		for (var i=0; i<3; i++) {
-			for (var j=0; j<3; j++) {
-				// instantiate a "smart square" on the virtual board
-				virtualBoard[i][j] = {isblank: 'true', symbol: 'none'}
-			}
-		}
-		drawBoard();
-		 
-		// 2. reset players, and wait for click (set isGameOver to false after person chooses X or O)
-	}
-	
-	// TODO: to do the AI thing, this method should take in a Board as input
-	// This function iterates over the rows, columns, and two diagonals.
-	// If a player has won, it returns the symbol of the winner ('X' or 'O').
-	// If no player has won, but the board is full, it returns 'none' (as in, no winner)
-	// If no player has won, and the game is not over, it returns 'not over'
-	var checkForWinner = function(boardToCheck) {
-		var winner = 'none';
-		
-		// Check rows, check columns, check diagonals
-		for (var row=0; row<3; row++) {
-			if (boardToCheck[row][0].symbol === boardToCheck[row][1].symbol &&
+    var startNewGame = function () {
+        // 1. clear virtual and graphical boards
+        for (var i = 0; i < 3; i++) {
+            for (var j = 0; j < 3; j++) {
+                // instantiate a "smart square" on the virtual board
+                virtualBoard[i][j] = { isblank: 'true', symbol: 'none' }
+            }
+        }
+        drawBoard();
+
+        // 2. ask person if they want to play x's or o's
+    }
+
+    // TODO: to do the AI thing, this method should take in a Board as input
+    // This function iterates over the rows, columns, and two diagonals.
+    // If a player has won, it returns the symbol of the winner ('X' or 'O').
+    // If no player has won, but the board is full, it returns 'none' (as in, no winner)
+    // If no player has won, and the game is not over, it returns 'not over'
+    var checkForWinner = function (boardToCheck) {
+        var winner = 'none';
+
+        // Check rows, check columns, check diagonals
+        for (var row = 0; row < 3; row++) {
+            if (boardToCheck[row][0].symbol === boardToCheck[row][1].symbol &&
 				boardToCheck[row][1].symbol === boardToCheck[row][2].symbol &&
 				boardToCheck[row][0].symbol !== 'none') {
-				winner = boardToCheck[row][0].symbol;
-			}
-		}
-		for (var col=0; col<3; col++) {
-			if (boardToCheck[0][col].symbol === boardToCheck[1][col].symbol &&
+                winner = boardToCheck[row][0].symbol;
+            }
+        }
+        for (var col = 0; col < 3; col++) {
+            if (boardToCheck[0][col].symbol === boardToCheck[1][col].symbol &&
 				boardToCheck[1][col].symbol === boardToCheck[2][col].symbol &&
 				boardToCheck[0][col].symbol !== 'none') {
-				winner = boardToCheck[0][col].symbol;
-			}
-		}
-		if (boardToCheck[0][0].symbol === boardToCheck[1][1].symbol &&		
-			boardToCheck[1][1].symbol === boardToCheck[2][2].symbol &&	
+                winner = boardToCheck[0][col].symbol;
+            }
+        }
+        if (boardToCheck[0][0].symbol === boardToCheck[1][1].symbol &&
+			boardToCheck[1][1].symbol === boardToCheck[2][2].symbol &&
 			boardToCheck[0][0].symbol !== 'none') {
-			winner = boardToCheck[0][0].symbol;
-		}
-		else if (boardToCheck[0][2].symbol === boardToCheck[1][1].symbol &&		
-			boardToCheck[1][1].symbol === boardToCheck[2][0].symbol &&	
+            winner = boardToCheck[0][0].symbol;
+        }
+        else if (boardToCheck[0][2].symbol === boardToCheck[1][1].symbol &&
+			boardToCheck[1][1].symbol === boardToCheck[2][0].symbol &&
 			boardToCheck[0][2].symbol !== 'none') {
-			winner = boardToCheck[0][2].symbol;
-		}
-		
-		var stalemate = true; 
-		for (var i=0; i<3; i++) {
-			for (var j=0; j<3; j++) {
-				if (boardToCheck[i][j].symbol === 'none') {
-					stalemate = false;
-				}
-			}
-		}
-		
-		if (winner !== 'none') {
-			return winner;
-		}
-		else if (winner === 'none' && stalemate === true) {
-			return 'none';
-		}
-		else {
-			return 'not over';
-		}
-	}
-	
-	var copyBoard = function(boardToCopy) {
-		var newBoard = [];
-		for (var i=0; i<3; i++) {
-			newBoard[i] = [];
-			for (var j = 0; j < 3; j++) {
-			    newBoard[i][j] = {};
-			    newBoard[i][j].isblank = boardToCopy[i][j].isblank;
-			    newBoard[i][j].symbol = boardToCopy[i][j].symbol;
-			}
-		}
-		return newBoard;
-	}
-	
+            winner = boardToCheck[0][2].symbol;
+        }
+
+        var stalemate = true;
+        for (var i = 0; i < 3; i++) {
+            for (var j = 0; j < 3; j++) {
+                if (boardToCheck[i][j].symbol === 'none') {
+                    stalemate = false;
+                }
+            }
+        }
+
+        if (winner !== 'none') {
+            return winner;
+        }
+        else if (winner === 'none' && stalemate === true) {
+            return 'none';
+        }
+        else {
+            return 'not over';
+        }
+    }
+
+    var copyBoard = function (boardToCopy) {
+        var newBoard = [];
+        for (var i = 0; i < 3; i++) {
+            newBoard[i] = [];
+            for (var j = 0; j < 3; j++) {
+                newBoard[i][j] = {};
+                newBoard[i][j].isblank = boardToCopy[i][j].isblank;
+                newBoard[i][j].symbol = boardToCopy[i][j].symbol;
+            }
+        }
+        return newBoard;
+    }
+
     // Takes in a virtual board and the symbol (X or O) for which to find the best move.
     // Returns an object "bestMove" with three fields:
     // 1. result = 'won | lost | stalemate'
     // 2. row
     // 3. col
-    // For debugging purposes, it takes in a symbol that is set to true only if it's a recursive call
-	var getOptimalMove = function(board, symbol, isRecursive) {
-	    // 1. for each blank space (e.g. possible move)
-	    var bestMove = { result: 'none', moveRow: -1, moveCol: -1 };
-	    var worstMove = { result: 'none', moveRow: -1, moveCol: -1};
+    var getOptimalMove = function (board, symbol) {
+        // 1. for each blank space (e.g. possible move)
+        var bestMove = { result: 'none', moveRow: -1, moveCol: -1 };
+        var worstMove = { result: 'none', moveRow: -1, moveCol: -1 };
 
-		for (var i=0; i<3; i++) {
-			for (var j=0; j<3; j++) {
-				if (board[i][j].symbol === 'none') {
-					// 	1.a. copy the input board, make move
-					boardCopy = copyBoard(board);
-					boardCopy[i][j].symbol = symbol;
-					boardCopy.isBlank = 'false';
-					moveResult = checkForWinner(boardCopy);
-					// 	1.a.i if input symbol won, return "won!" + move
-					if (moveResult === symbol) {
-						bestMove.result = 'won';
-						bestMove.moveRow = i;
-						bestMove.moveCol = j;
-						return bestMove;
-					}
-					//	1.a.ii if board is at a stalemate, return "stalemate" + move
-					else if (moveResult === 'none') {
-						bestMove.result = "stalemate";
-						bestMove.moveRow = i;
-						bestMove.moveCol = j;
-					}
-					else if (moveResult === 'not over') {
-					//	1.a.iv if game is not over, recursively call "makeOptimalMove" with current copy of board and opposite symbol; return "lost" if it returns "won" or "stalemate" + move if it returns "stalemate"
-						var opponentSymbol;
-						if (symbol === 'X') opponentSymbol = 'O';
-						else opponentSymbol = 'X';
-						
-						var opponentOptimalMove = getOptimalMove(boardCopy, opponentSymbol, true);
-						if (opponentOptimalMove.result === 'lost') {
-							bestMove.result = 'won';
-							bestMove.moveRow = i;
-							bestMove.moveCol = j;
-							return bestMove;
-						}
-						else if (opponentOptimalMove.result === 'stalemate') {
-							bestMove.result = 'stalemate';
-							bestMove.moveRow = i;
-							bestMove.moveCol = j;
-						}
-						else {
-						    worstMove.result = 'lost';
-						    worstMove.moveRow = i;
-						    worstMove.moveCol = j;
-						}
-					}
-					else {
-					    worstMove.result = 'lost';
-					    worstMove.moveRow = i;
-					    worstMove.moveCol = j;
-					}
-				}
-			}
-		}
+        for (var i = 0; i < 3; i++) {
+            for (var j = 0; j < 3; j++) {
+                if (board[i][j].symbol === 'none') {
+                    // 	1.a. copy the input board, make move
+                    boardCopy = copyBoard(board);
+                    boardCopy[i][j].symbol = symbol;
+                    boardCopy.isBlank = 'false';
+                    moveResult = checkForWinner(boardCopy);
+                    // 	1.a.i if input symbol won, return "won!" + move
+                    if (moveResult === symbol) {
+                        bestMove.result = 'won';
+                        bestMove.moveRow = i;
+                        bestMove.moveCol = j;
+                        return bestMove;
+                    }
+                        //	1.a.ii if board is at a stalemate, return "stalemate" + move
+                    else if (moveResult === 'none') {
+                        bestMove.result = "stalemate";
+                        bestMove.moveRow = i;
+                        bestMove.moveCol = j;
+                    }
+                    else if (moveResult === 'not over') {
+                        //	1.a.iv if game is not over, recursively call "makeOptimalMove" with current copy of board and opposite symbol; return "lost" if it returns "won" or "stalemate" + move if it returns "stalemate"
+                        var opponentSymbol;
+                        if (symbol === 'X') opponentSymbol = 'O';
+                        else opponentSymbol = 'X';
 
-		if (bestMove.result === 'none') {
-		    bestMove.result = worstMove.result;
-		    bestMove.moveRow = worstMove.moveRow;
-		    bestMove.moveCol = worstMove.moveCol;
-		}
-		if (!isRecursive) {
-		    console.log("Found a move at place " + bestMove.moveRow + ", " + bestMove.moveCol + ", expecting " + symbol + " " + bestMove.result);
-		}
-		return bestMove;
-	}
-	
-	var toggleCurrentPlayer = function() {
-		// TODO for now, all players are not AI
-		if (currPlayer === player1) {
-			currPlayer = player2;
-		}
-		else {
-			currPlayer = player1;
-		}
-		
-		if (currPlayer.isAI === 'true') {
-			AImove = getOptimalMove(virtualBoard, currPlayer.symbol, false);
-			attemptMove(AImove.moveRow, AImove.moveCol);
-		}
-	}
-	
-	var attemptMove = function (row, col) {
-		if (!isGameOver) {
-			if (virtualBoard[row][col].isblank === "true") {
-				// 1. Make the move
-				virtualBoard[row][col].isblank = "false";
-				virtualBoard[row][col].symbol = currPlayer.symbol;
-				
-				// TODO: check if currPlayer is AI; if so, set a timer to wait to draw the board (so it feels like the computer is "thinking")
-				drawBoard();
-			
-				// 2. Evaluate game state 
-				var winner = checkForWinner(virtualBoard);
-				if (winner === "not over") {
-					isGameOver = false;
-					toggleCurrentPlayer();
-				}
-				else if (winner === 'none') {
-					// TODO: it's a stalemate, alert the player, also disable clicking
-					// Also maybe disable game or show button to play again?
-					isGameOver = true;
-					alert("It's a stalemate, mate.");
-				}
-				else {
-				    isGameOver = true;
-				    alert("Winner is " + winner);
-					// TODO: tell player who the winner is, disable clicking, offer a rematch
-				}
-			}
-			else {
-				// TODO: display a message that says "nope, that spot is taken!"
-				alert("You can't click there!");
-			}
-		}
-		else {
-			// TODO: flash the rematch/start over button?
-		}
-	}
-	
-	/*
+                        var opponentOptimalMove = getOptimalMove(boardCopy, opponentSymbol);
+                        if (opponentOptimalMove.result === 'lost') {
+                            bestMove.result = 'won';
+                            bestMove.moveRow = i;
+                            bestMove.moveCol = j;
+                            return bestMove;
+                        }
+                        else if (opponentOptimalMove.result === 'stalemate') {
+                            bestMove.result = 'stalemate';
+                            bestMove.moveRow = i;
+                            bestMove.moveCol = j;
+                        }
+                        else {
+                            worstMove.result = 'lost';
+                            worstMove.moveRow = i;
+                            worstMove.moveCol = j;
+                        }
+                    }
+                    else {
+                        worstMove.result = 'lost';
+                        worstMove.moveRow = i;
+                        worstMove.moveCol = j;
+                    }
+                }
+            }
+        }
+
+        if (bestMove.result === 'none') {
+            bestMove.result = worstMove.result;
+            bestMove.moveRow = worstMove.moveRow;
+            bestMove.moveCol = worstMove.moveCol;
+        }
+
+        return bestMove;
+    }
+
+    var toggleCurrentPlayer = function () {
+        // TODO for now, all players are not AI
+        if (currPlayer === player1) {
+            currPlayer = player2;
+        }
+        else {
+            currPlayer = player1;
+        }
+
+        if (currPlayer.isAI === 'true') {
+            AImove = getOptimalMove(virtualBoard, currPlayer.symbol);
+            attemptMove(AImove.moveRow, AImove.moveCol);
+        }
+    }
+
+    var attemptMove = function (row, col) {
+        if (!isGameOver) {
+            if (virtualBoard[row][col].isblank === "true") {
+                // 1. Make the move
+                virtualBoard[row][col].isblank = "false";
+                virtualBoard[row][col].symbol = currPlayer.symbol;
+
+                // TODO: check if currPlayer is AI; if so, set a timer to wait to draw the board (so it feels like the computer is "thinking")
+                drawBoard();
+
+                // 2. Evaluate game state 
+                var winner = checkForWinner(virtualBoard);
+                if (winner === "not over") {
+                    isGameOver = false;
+                    toggleCurrentPlayer();
+                }
+                else if (winner === 'none') {
+                    // TODO: it's a stalemate, alert the player, also disable clicking
+                    // Also maybe disable game or show button to play again?
+                    isGameOver = true;
+                    alert("It's a stalemate, mate.");
+                }
+                else {
+                    isGameOver = true;
+                    alert("Winner is " + winner);
+                    // TODO: tell player who the winner is, disable clicking, offer a rematch
+                }
+            }
+            else {
+                // TODO: display a message that says "nope, that spot is taken!"
+                alert("You can't click there!");
+            }
+        }
+        else {
+            // TODO: flash the rematch/start over button?
+        }
+    }
+
+    /*
 	 * SET UP html and javascript interaction
 	 */
-	
-	// Iterate through the divs and give them onclick events
-	for (var i=0; i<3; i++) {
-		for (var j=0; j<3; j++) {
-			divId = "" + i + j;
-			var tempdiv = document.getElementById(divId);
-			tempdiv.onclick = function() {
-				var row = i;
-				var col = j;
-				return function() {
-					attemptMove(row, col); 
-				}
-			}();
-		}
-	}
-	
-	/*
+
+    // Iterate through the divs and give them onclick events
+    for (var i = 0; i < 3; i++) {
+        for (var j = 0; j < 3; j++) {
+            divId = "" + i + j;
+            var tempdiv = document.getElementById(divId);
+            tempdiv.onclick = function () {
+                var row = i;
+                var col = j;
+                return function () {
+                    attemptMove(row, col);
+                }
+            }();
+        }
+    }
+
+    /*
 	 * START the flow of control
 	 */
-	
-	startNewGame();
+
+    startNewGame();
 
 };
