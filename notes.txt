@@ -22,13 +22,10 @@ current player:
 Architecture
 --------
 Need to keep track of a current player
-To start game: "Play a friend or play a computer?
-Need a way to reset or re-start game at any given time
 Need a way to set "winner" (either X, O, no one, or null)
 Need a way of displaying messages like "You can't do that!" or "X is the winner!"
 Need a "virtual board" that talks to the graphical (html) board (so I don't have to iterate over the DOM every time I want to check if a move is valid or if the game is over)
 Would be nice if the AI had a "thinking..." timer
-A cool Easter egg would be to have a button that says "i give up" and show a message like "the only winning move is not to play" alluding to that 80's movie with nuclear program AIs...
 
 
 --------
@@ -36,4 +33,10 @@ Methods
 --------
 checkGameOver: looks at board, returns bool of true or false
 
-		
+--------
+Unrealized dreams
+--------
+- To start game: "Play a friend or play a computer?
+- Need a way to reset or re-start game at any given time
+- Hover effects for squares that are available
+- A cool Easter egg would be to have a button that says "i give up" and show a message like "the only winning move is not to play" alluding to that 80's movie with nuclear program AIs...

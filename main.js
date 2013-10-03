@@ -4,7 +4,7 @@ window.onload = function () {
 	 */
 
     var player1 = { symbol: 'X', isAI: 'false' }
-    var player2 = { symbol: 'O', isAI: 'true' }
+    var player2 = { symbol: 'O', isAI: 'false' }
     var currPlayer = player1;
 
     var isGameOver = false;
@@ -193,6 +193,8 @@ window.onload = function () {
             currPlayer = player1;
         }
 
+        document.getElementById("turnLabel").innerHTML = currPlayer.symbol + ", it's your turn";
+
         if (currPlayer.isAI === 'true') {
             AImove = getOptimalMove(virtualBoard, currPlayer.symbol);
             attemptMove(AImove.moveRow, AImove.moveCol);
@@ -218,11 +220,11 @@ window.onload = function () {
                 else if (winner === 'none') {
                     // TODO:  change to better alert style, also disable clicking, offer to play again
                     isGameOver = true;
-                    alert("It's a stalemate, mate.");
+                    document.getElementById("turnLabel").innerHTML = "Stalemate! <a href='#' onclick='startNewGame()'>Play again?</a>";
                 }
                 else {
                     isGameOver = true;
-                    alert("Winner is " + winner);
+                    document.getElementById("turnLabel").innerHTML = winner + " wins! ";
                     // TODO: change to better alert style, disable clicking, offer a rematch
                 }
             }
