@@ -1,0 +1,68 @@
+﻿body
+{
+    color: white;
+    background-color: rgb(128, 128, 128);
+}
+
+table
+{
+    margin:auto;
+    margin-top: 5%;
+}
+
+.contentpanel
+{
+    float: left;
+    height: 100%;
+    text-align: center;
+}
+
+.boardsquare 
+{
+    cursor: pointer;
+	width: 100px;
+	height: 100px;
+	background-color:rgb(200,200,200);
+	text-align: center;
+}
+
+#header
+{
+    text-align: center;
+    margin: 20px;
+    outline: white dashed 1px;
+}
+
+#content
+{
+    width: 65%;
+    height: 450px;
+	margin: 0 auto;
+}
+
+#PlayerXPanel
+{
+    width: 16%;
+    outline: white dashed 1px;
+}
+
+#board
+{
+    width: 68%;
+    outline: white dashed 1px;
+}
+
+#PlayerOPanel
+{
+    width: 16%;
+    float: right;
+    outline: white dashed 1px;
+}
+
+#footer
+{
+    clear: both;
+    text-align: center;
+    outline: white dashed 1px;
+    margin: 20px;
+}
