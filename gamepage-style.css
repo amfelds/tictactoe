@@ -39,15 +39,6 @@ ellipse
 	opacity:0.5;
 }
 
-table
-{
-    margin:auto;
-    margin-top: 5%;
-    border-collapse: collapse;
-    background-image: url('resources/tictactoeboard.svg');
-    background-position: center center; 
-}
-
 a:visited
 {
 	color: #369DF7;
@@ -125,6 +116,20 @@ a:active
 {
     width: 62%;
     /*outline: white dashed 1px;*/
+}
+
+#boardtable
+{
+    margin:auto;
+    margin-top: 5%;
+    border-collapse: collapse;
+    background-image: url('resources/tictactoeboard.svg');
+    background-position: center center; 
+}
+
+#chalkcanvas
+{
+    background-color: cyan;
 }
 
 #PlayerOPanel
