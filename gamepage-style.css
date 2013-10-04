@@ -121,15 +121,17 @@ a:active
 #boardtable
 {
     margin:auto;
-    margin-top: 5%;
     border-collapse: collapse;
     background-image: url('resources/tictactoeboard.svg');
     background-position: center center; 
+    position: relative;
+    top: -300px;
 }
 
 #chalkcanvas
 {
-    background-color: cyan;
+    margin-top: 5%;
+    outline: 2px red solid;
 }
 
 #PlayerOPanel
