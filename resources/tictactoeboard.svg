@@ -4,11 +4,11 @@
    class="svgboardline" width="300px" height="300px">
 <defs>
     		<filter id="f1" x="0" y="0">
-      			<feGaussianBlur stdDeviation="4" />
+      			<feGaussianBlur stdDeviation="3" />
     		</filter>
   		</defs>
-    	<line x1="100" y1="0" x2="100" y2="300" style="stroke:rgb(245,245,245);stroke-width:9" filter="url(#f1)"/>
-    	<line x1="200" y1="0" x2="200" y2="300" style="stroke:rgb(245,245,245);stroke-width:8" filter="url(#f1)"/>
-    	<line x1="0" y1="100" x2="300" y2="100" style="stroke:rgb(245,245,245);stroke-width:9" filter="url(#f1)"/>
-    	<line x1="0" y1="200" x2="300" y2="200" style="stroke:rgb(245,245,245);stroke-width:8" filter="url(#f1)"/>
+    	<line x1="100" y1="0" x2="100" y2="300" style="stroke:rgb(255,255,255);stroke-width:10" filter="url(#f1)"/>
+    	<line x1="200" y1="0" x2="200" y2="300" style="stroke:rgb(255,255,255);stroke-width:9" filter="url(#f1)"/>
+    	<line x1="0" y1="100" x2="300" y2="100" style="stroke:rgb(255,255,255);stroke-width:10" filter="url(#f1)"/>
+    	<line x1="0" y1="200" x2="300" y2="200" style="stroke:rgb(255,255,255);stroke-width:9" filter="url(#f1)"/>
 	</svg>

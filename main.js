@@ -68,7 +68,7 @@ window.onload = function () {
 		
 		if (currPlayer.isAI) {
 			moveToMake = getOptimalMove(virtualBoard, currPlayer.symbol);
-			attemptMove(moveToMake.row, moveToMake.col);
+			setTimeout(function() {attemptMove(moveToMake.row, moveToMake.col);}, 900);
 		}
 	}
 	
@@ -85,7 +85,6 @@ window.onload = function () {
 		// 2. ask person if they want to play x's or o's
 	}
 	
-	// TODO: to do the AI thing, this method should take in a Board as input
 	// This function iterates over the rows, columns, and two diagonals.
 	// If a player has won, it returns the symbol of the winner ('X' or 'O').
 	// If no player has won, but the board is full, it returns 'none' (as in, no winner)
@@ -238,7 +237,7 @@ window.onload = function () {
 		
 		if (currPlayer.isAI) {
 			AImove = getOptimalMove(virtualBoard, currPlayer.symbol);
-			attemptMove(AImove.row, AImove.col);
+			setTimeout(function() {attemptMove(AImove.row, AImove.col);}, 900);
 		}
 	}
 	
@@ -249,7 +248,6 @@ window.onload = function () {
 				virtualBoard[row][col].isblank = "false";
 				virtualBoard[row][col].symbol = currPlayer.symbol;
 				
-				// TODO: check if currPlayer is AI; if so, set a timer to wait to draw the board (so it feels like the computer is "thinking")
 				drawBoard();
 			
 				// 2. Evaluate game state 
@@ -260,7 +258,7 @@ window.onload = function () {
 				}
 				else if (winner === 'none') {
 					isGameOver = true;
-					document.getElementById("turnLabel").innerHTML =  "Wah-wah. Stalemate!";
+					document.getElementById("turnLabel").innerHTML =  "Stalemate!";
 					document.getElementById("gameOverButton").innerHTML = "Play again?";
 					document.getElementById("gameOverButton").className = "visible";
 					// TODO: something hidden becomes unhidden to offer rematch
