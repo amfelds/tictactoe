@@ -66,9 +66,6 @@ window.onload = function () {
 			document.getElementById(player.symbol + "AI").className = "up";
 		}
 		
-		console.log("player1 AI: " + player1.isAI);
-		console.log("player2 AI: " + player2.isAI);
-		
 		if (currPlayer.isAI) {
 			moveToMake = getOptimalMove(virtualBoard, currPlayer.symbol);
 			attemptMove(moveToMake.row, moveToMake.col);
@@ -235,7 +232,6 @@ window.onload = function () {
 		}
 		else {
 			currPlayer = player1;
-			console.log("currPlayer: " + currPlayer.symbol + ", " + currPlayer.isAI);
 		}
 		
 		document.getElementById("turnLabel").innerHTML = currPlayer.symbol + "'s turn";

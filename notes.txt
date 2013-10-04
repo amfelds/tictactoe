@@ -36,4 +36,10 @@ Methods
 --------
 checkGameOver: looks at board, returns bool of true or false
 
+--------
+Dreams
+--------
+- Have the "getOptimalMove" method start at random rows and columns to make game non-deterministic
+- arrow pointing at player who's turn it is (or maybe a border or something)
+
 		
