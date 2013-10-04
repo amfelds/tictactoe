@@ -33,8 +33,8 @@ body
 
 ellipse
 {
-	fill:red;
-	stroke:white;
+	fill: #FC173D;
+	stroke: white;
 	stroke-width:2;
 	opacity:0.5;
 }
@@ -60,7 +60,7 @@ a:active
 
 #gameOverButton
 {
-	color: #F7C9A0;
+	color: #FC8DCE;
 	cursor: pointer;
 	width: 10em;
 	margin: auto;
@@ -75,11 +75,6 @@ a:active
 .hidden
 {
 	visibility: hidden;
-}
-
-#postGameButton:hover
-{
-	color: blue;
 }
 
 #header
@@ -121,19 +116,21 @@ a:active
 
 #PlayerXPanel
 {
-    width: 16%;
+    width: 19%;
+    color: #6DB9FC;
     /*outline: white dashed 1px;*/
 }
 
 #board
 {
-    width: 68%;
+    width: 62%;
     /*outline: white dashed 1px;*/
 }
 
 #PlayerOPanel
 {
-    width: 16%;
+	color: #F7C9A0;
+    width: 19%;
     float: right;
     /*outline: white dashed 1px;*/
 }
@@ -173,32 +170,25 @@ a:active
 .up 
 {
 	margin: auto;
-	width: 6.4em;
-	color: black;
+	width: 90%;
+	padding: 5%;
+	color: rgb(205,205,205);
+	font-size: large;
 	text-align: center;
 	cursor: pointer;
-    background: #ccc;
-    opacity: 0.4;
-    border-top: solid 2px #eaeaea;
-    border-left: solid 2px #eaeaea;
-    border-bottom:solid 2px  #eaeaea;
-    border-right: solid 2px #eaeaea;
-    padding: 3px 5px;   
     margin-top: 10px;
+    outline: grey dashed 2px;
 }
 
 .down 
 {
 	margin: auto;
-	width: 6.4em;
-	color: black;
+	width: 90%;
+	padding: 5%;
+	color: rgb(205,205,205);
+	font-size: large;
 	text-align: center;
 	cursor: pointer;
-    background: #aaa;
-    border-top: solid 2px #777;
-    border-left: solid 2px #777;
-    border-bottom: solid 2px #777;
-    border-right: solid 2px #777;
-    padding: 3px 5px; 
     margin-top: 10px;
+    outline: grey dashed 2px;
 }
