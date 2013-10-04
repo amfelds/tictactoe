@@ -46,7 +46,9 @@ window.onload = function () {
 		drawBoard();
 
 	    //clear canvas elements
-		document.getElementById("chalkcanvas").innerHTML = "";
+		var c = document.getElementById("chalkcanvas");
+		var ctx = c.getContext("2d");
+		ctx.clearRect(0, 0, 300, 300);
 
         // reset game info
 		currPlayer = player1;
@@ -96,7 +98,16 @@ window.onload = function () {
 		}
 		drawBoard();
 	}
+
+	var chalkStroke = function (x1, y1, x2, y2) {
+	    var c = document.getElementById("chalkcanvas");
+	    var ctx = c.getContext("2d");
+	    ctx.moveTo(x1, y1);
+	    ctx.lineTo(x2, y2);
+	    ctx.stroke();
+	}
 	
+    // TODO factor the stroke drawing out into a helper function that takes an x,y start and stop coord
 	// This function iterates over the rows, columns, and two diagonals.
 	// If a player has won, it returns the symbol of the winner ('X' or 'O').
 	// If no player has won, but the board is full, it returns 'none' (as in, no winner)
@@ -110,7 +121,7 @@ window.onload = function () {
 				boardToCheck[row][1].symbol === boardToCheck[row][2].symbol &&
 				boardToCheck[row][0].symbol !== 'none') {
 			    winner = boardToCheck[row][0].symbol;
-			    // TODO draw line across row
+			    // raw line across row
 			    var c = document.getElementById("chalkcanvas");
 			    var ctx = c.getContext("2d");
 			    var strokeX = (row * 100) + 50;
@@ -124,7 +135,7 @@ window.onload = function () {
 				boardToCheck[1][col].symbol === boardToCheck[2][col].symbol &&
 				boardToCheck[0][col].symbol !== 'none') {
 			    winner = boardToCheck[0][col].symbol;
-			    // TODO draw line down column
+			    // draw line down column
 			    var c = document.getElementById("chalkcanvas");
 			    var ctx = c.getContext("2d");
 			    var strokeY = (col * 100) + 50;
@@ -137,7 +148,7 @@ window.onload = function () {
 			boardToCheck[1][1].symbol === boardToCheck[2][2].symbol &&	
 			boardToCheck[0][0].symbol !== 'none') {
 		    winner = boardToCheck[0][0].symbol;
-		    // TODO draw diagonal
+		    // draw diagonal
 		    var c = document.getElementById("chalkcanvas");
 		    var ctx = c.getContext("2d");
 		    ctx.moveTo(1, 10);
@@ -148,7 +159,7 @@ window.onload = function () {
 			boardToCheck[1][1].symbol === boardToCheck[2][0].symbol &&	
 			boardToCheck[0][2].symbol !== 'none') {
 		    winner = boardToCheck[0][2].symbol;
-		    // TODO draw diagonal
+		    // draw diagonal
 		    var c = document.getElementById("chalkcanvas");
 		    var ctx = c.getContext("2d");
 		    ctx.moveTo(299, 1);

@@ -1,3 +1,13 @@
+why doesn't refactoring this work?
+	var chalkStroke = function (x1, y1, x2, y2) {
+	    var c = document.getElementById("chalkcanvas");
+	    var ctx = c.getContext("2d");
+	    ctx.moveTo(x1, y1);
+	    ctx.lineTo(x2, strokeX);
+	    return ctx.stroke();
+	}
+
+
 --------
 Algorithm
 --------
