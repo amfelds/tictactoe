@@ -31,6 +31,25 @@ window.onload = function () {
 		}
 	}
 	
+	var togglePlayerType = function(player) {
+		// 1. toggle boolean value of player.isAI
+		player.isAI = !(player.isAI);
+		// 2. change css class of button
+		
+		// 3. change text of button
+		if (player.isAI) {
+			document.getElementById(player.symbol + "AI").innerHTML = "RO-B0T";
+			document.getElementById(player.symbol + "AI").className = "down";
+		}
+		else {
+			document.getElementById(player.symbol + "AI").innerHTML = "HOOMIN";
+			document.getElementById(player.symbol + "AI").className = "up";
+		}
+		
+		console.log("player1 AI: " + player1.isAI);
+		console.log("player2 AI: " + player2.isAI);
+	}
+	
 	var startNewGame = function() {
 		// 1. clear virtual and graphical boards
 		for (var i=0; i<3; i++) {
@@ -102,16 +121,26 @@ window.onload = function () {
 		var newBoard = [];
 		for (var i=0; i<3; i++) {
 			newBoard[i] = [];
-			for (var j=0; j<3; j++) {
-				newBoard[i][j] = boardToCopy[i][j];
+			for (var j = 0; j < 3; j++) {
+			    newBoard[i][j] = {};
+			    newBoard[i][j].isblank = boardToCopy[i][j].isblank;
+			    newBoard[i][j].symbol = boardToCopy[i][j].symbol;
 			}
 		}
 		return newBoard;
 	}
 	
+    // Takes in a virtual board and the symbol (X or O) for which to find the best move.
+    // Returns an object "bestMove" with three fields:
+    // 1. result = 'won | lost | stalemate'
+    // 2. row
+    // 3. col
+    // For debugging purposes, it takes in a symbol that is set to true only if it's a recursive call
 	var getOptimalMove = function(board, symbol) {
-		// 1. for each blank space (e.g. possible move)
-		var bestMove = {result: 'none', moveRow: -1, moveCol: -1};
+	    // 1. for each blank space (e.g. possible move)
+	    var bestMove = { result: 'none', moveRow: -1, moveCol: -1 };
+	    var worstMove = { result: 'none', moveRow: -1, moveCol: -1};
+
 		for (var i=0; i<3; i++) {
 			for (var j=0; j<3; j++) {
 				if (board[i][j].symbol === 'none') {
@@ -125,14 +154,13 @@ window.onload = function () {
 						bestMove.result = 'won';
 						bestMove.moveRow = i;
 						bestMove.moveCol = j;
-						break;
+						return bestMove;
 					}
 					//	1.a.ii if board is at a stalemate, return "stalemate" + move
 					else if (moveResult === 'none') {
 						bestMove.result = "stalemate";
 						bestMove.moveRow = i;
 						bestMove.moveCol = j;
-						break;
 					}
 					else if (moveResult === 'not over') {
 					//	1.a.iv if game is not over, recursively call "makeOptimalMove" with current copy of board and opposite symbol; return "lost" if it returns "won" or "stalemate" + move if it returns "stalemate"
@@ -140,33 +168,39 @@ window.onload = function () {
 						if (symbol === 'X') opponentSymbol = 'O';
 						else opponentSymbol = 'X';
 						
-						var opponentOptimalMove = getOptimalMove(boardCopy, opponentSymbol);
-						if (opponentSymbol.result === 'lost') {
+						var opponentOptimalMove = getOptimalMove(boardCopy, opponentSymbol, true);
+						if (opponentOptimalMove.result === 'lost') {
 							bestMove.result = 'won';
 							bestMove.moveRow = i;
 							bestMove.moveCol = j;
-							break;
+							return bestMove;
 						}
-						else if (opponentSymbol.result === 'stalemate') {
+						else if (opponentOptimalMove.result === 'stalemate') {
 							bestMove.result = 'stalemate';
 							bestMove.moveRow = i;
 							bestMove.moveCol = j;
-							break;
 						}
 						else {
-							bestMove.result = 'lost';
-							bestMove.moveRow = i;
-							bestMove.moveCol = j;
+						    worstMove.result = 'lost';
+						    worstMove.moveRow = i;
+						    worstMove.moveCol = j;
 						}
 					}
 					else {
-						bestMove.result = 'lost';
-						bestMove.moveRow = i;
-						bestMove.moveCol = j;
+					    worstMove.result = 'lost';
+					    worstMove.moveRow = i;
+					    worstMove.moveCol = j;
 					}
 				}
 			}
 		}
+
+		if (bestMove.result === 'none') {
+		    bestMove.result = worstMove.result;
+		    bestMove.moveRow = worstMove.moveRow;
+		    bestMove.moveCol = worstMove.moveCol;
+		}
+
 		return bestMove;
 	}
 	
@@ -179,10 +213,15 @@ window.onload = function () {
 			currPlayer = player1;
 		}
 		
+		document.getElementById("turnLabel").innerHTML = currPlayer.symbol + "'s turn";
+		
 		if (currPlayer.isAI === 'true') {
 			AImove = getOptimalMove(virtualBoard, currPlayer.symbol);
 			attemptMove(AImove.moveRow, AImove.moveCol);
 		}
+		
+		console.log("player1 AI: " + player1.isAI);
+		console.log("player2 AI: " + player2.isAI);
 	}
 	
 	var attemptMove = function (row, col) {
@@ -205,10 +244,11 @@ window.onload = function () {
 					// TODO: it's a stalemate, alert the player, also disable clicking
 					// Also maybe disable game or show button to play again?
 					isGameOver = true;
-					alert("It's a stalemate, mate.");
+					document.getElementById("statuslabel").innerHTML = "It's a stalemate, mate. Play again?";
 				}
 				else {
-					isGameOver = true;
+				    isGameOver = true;
+				    document.getElementById("statuslabel").innerHTML = "Winner is " + winner + "<br />Rematch?";
 					// TODO: tell player who the winner is, disable clicking, offer a rematch
 				}
 			}
@@ -240,6 +280,13 @@ window.onload = function () {
 			}();
 		}
 	}
+	
+	document.getElementById("XAI").onclick = function() {
+		togglePlayerType(player1);
+	};
+	document.getElementById("OAI").onclick = function() {
+		togglePlayerType(player2);
+	};
 	
 	/*
 	 * START the flow of control

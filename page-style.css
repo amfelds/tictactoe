@@ -1,7 +1,28 @@
+body {
+	background-image: url('resources/Chalkboard.jpg');
+	background-size: 100%;
+	color: rgb(200,200,200);
+}
+
+#header {
+	text-align: center;
+}
+
 #board {
-	display: inline-block;
-	float: center;
-	padding: 10%;
+	padding-left:50%;
+	padding-right:50%;
+}
+
+#statuslabel {
+	text-align: center;
+}
+
+#turnLabel {
+	text-align: center;
+}
+
+.playerlabel {
+	padding: 10px;
 }
 
 .boardsquare {
@@ -9,7 +30,39 @@
 	height: 50px;
 	background-color:#008800;
 	text-align: center;
+	cursor: pointer;
 }
+
+.svgboardline {
+	animation: 5s linear;
+}
+
+.up {
+	width: 5em;
+	color: black;
+	text-align: center;
+	cursor: pointer;
+    background: #ccc;
+    border-top: solid 2px #eaeaea;
+    border-left: solid 2px #eaeaea;
+    border-bottom:solid 2px  #eaeaea;
+    border-right: solid 2px #eaeaea;
+    padding: 5px 5px;   
+    }
+
+.down {
+	margin: 0.05em;
+	width: 4.9em;
+	color: black;
+	text-align: center;
+	cursor: pointer;
+    background: #aaa;
+    border-top: solid 2px #777;
+    border-left: solid 2px #777;
+    border-bottom: solid 2px #777;
+    border-right: solid 2px #777;
+    padding: 5px 5px; 
+    }
 
 td {
 	vertical-align: center;
