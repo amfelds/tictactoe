@@ -9,7 +9,12 @@
 </head>
 <body>
     <div id="header">
-    	<div id="resetButton" clss="button">Reset Game</div>
+    	<div id="resetButton" clss="button">
+    		<svg class="svgboardline" width="30px" height="30px" version="1.1">
+    			<ellipse cx="17" cy="9" rx="11" ry="8" style=""/>
+			</svg>
+    		Reset Game
+    	</div>
     </div>
     <div id="content">
         <div id="PlayerXPanel" class="contentpanel">Player X
@@ -19,17 +24,17 @@
             <div id="turnLabel">X goes first</div>
             <div id="gameOverButton" class="hidden">&nbsp:</div>
             <table>
-	            <tr>
+	            <tr id="firstrow">
 	                <td><div id="00" class="boardsquare top left"></div></td>
 	                <td><div id="01" class="boardsquare top center"></div></td>
 	                <td><div id="02" class="boardsquare top right"></div></td>
 	            </tr>
-	            <tr>
+	            <tr id="secondrow">
 	                <td><div id="10" class="boardsquare middle left"></div></td>
 	                <td><div id="11" class="boardsquare middle center"></div></td>
 	                <td><div id="12" class="boardsquare middle right"></div></td>
 	            </tr>
-	            <tr>
+	            <tr id="thirdrow">
 	                <td><div id="20" class="boardsquare bottom left"></div></td>
 	                <td><div id="21" class="boardsquare bottom center"></div></td>
 	                <td><div id="22" class="boardsquare bottom right"></div></td>

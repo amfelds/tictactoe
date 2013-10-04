@@ -1,13 +1,143 @@
-﻿body
+﻿@font-face
+{
+	font-family: eraser;
+	src: url('resources/EraserRegular.ttf');
+}
+
+@font-face
+{
+	font-family: crayoncrumble;
+	src: url('resources/CrayonCrumble.ttf');
+}
+
+@font-face
+{
+	font-family: smudgie;
+	src: url('resources/SmudgieCrayon.ttf');
+}
+
+@font-face
+{
+	font-family: dust;
+	src: url('resources/EraserDust.ttf');
+}
+
+body
 {
     color: white;
     background-image: url("resources/Chalkboard.jpg");
+    width: 100%;
+    height: 100%;
+    font-family: crayoncrumble;
+}
+
+ellipse
+{
+	fill:red;
+	stroke:white;
+	stroke-width:2;
+	opacity:0.5;
 }
 
 table
 {
     margin:auto;
     margin-top: 5%;
+    border-collapse: collapse;
+    background-image: url('resources/tictactoeboard.svg');
+    background-position: center center; 
+}
+
+#gameOverButton
+{
+	color: #F7C9A0;
+	cursor: pointer;
+	width: 10em;
+	margin: auto;
+	display: block;
+}
+
+.visible
+{
+	visibility: visible;
+}
+
+.hidden
+{
+	visibility: hidden;
+}
+
+#postGameButton:hover
+{
+	color: blue;
+}
+
+#header
+{
+    margin: 20px;
+    clear: left;
+    /*outline: white dashed 1px;*/
+}
+
+#resetsvg 
+{
+	float: left;
+}
+
+#resetButton
+{
+	width: 6em;
+	text-align: right;
+	cursor: pointer;
+	color: rgb(220,220,220);
+	font-size: x-large;
+}
+
+#resetButton:hover
+{
+	opacity: 1;
+	color: white;
+}
+
+#content
+{
+	/*clear: left;*/
+    width: 65%;
+    height: 450px;
+	margin: 0 auto;
+	text-align: center; 
+}
+
+#PlayerXPanel
+{
+    width: 16%;
+    /*outline: white dashed 1px;*/
+}
+
+#board
+{
+    width: 68%;
+    /*outline: white dashed 1px;*/
+}
+
+#PlayerOPanel
+{
+    width: 16%;
+    float: right;
+    /*outline: white dashed 1px;*/
+}
+
+#footer
+{
+    clear: both;
+    text-align: center;
+    margin: 20px;
+    /*outline: white dashed 1px;*/
+}
+
+.svgboardline 
+{
+	float: left;
 }
 
 .contentpanel
@@ -15,6 +145,8 @@ table
     float: left;
     height: 100%;
     text-align: center;
+    font-family: dust;
+    font-size: x-large;
 }
 
 .boardsquare 
@@ -22,7 +154,8 @@ table
     cursor: pointer;
 	width: 100px;
 	height: 100px;
-	background-color:rgb(200,200,200);
+	font-family: eraser;
+	font-size: 90px;
 	text-align: center;
 }
 
@@ -57,84 +190,4 @@ table
     border-right: solid 2px #777;
     padding: 3px 5px; 
     margin-top: 10px;
-}
-
-#gameOverButton
-{
-	background-color: cyan;
-	cursor: pointer;
-	width: 10em;
-	margin: auto;
-	display: block;
-}
-
-.visible
-{
-	visibility: visible;
-}
-
-.hidden
-{
-	visibility: hidden;
-}
-
-#postGameButton:hover
-{
-	background-color: blue;
-}
-
-#header
-{
-    margin: 20px;
-    clear: left;
-    /*outline: white dashed 1px;*/
-}
-
-#resetButton
-{
-	width: 10em;
-	background-color: red;
-	border: pink;
-	text-align: center;
-	cursor: pointer;
-}
-
-#resetButton:hover
-{
-	background-color: blue;
-}
-
-#content
-{
-	clear: left;
-    width: 65%;
-    height: 450px;
-	margin: 0 auto;
-}
-
-#PlayerXPanel
-{
-    width: 16%;
-    /*outline: white dashed 1px;*/
-}
-
-#board
-{
-    width: 68%;
-    /*outline: white dashed 1px;*/
-}
-
-#PlayerOPanel
-{
-    width: 16%;
-    float: right;
-    /*outline: white dashed 1px;*/
-}
-
-#footer
-{
-    clear: both;
-    text-align: center;
-    margin: 20px;
-    /*outline: white dashed 1px;*/
 }
