@@ -33,24 +33,35 @@ body {
 	cursor: pointer;
 }
 
-a {
+.svgboardline {
+	animation: 5s linear;
+}
+
+.up {
+	width: 5em;
 	color: black;
+	text-align: center;
+	cursor: pointer;
     background: #ccc;
-    cursor: pointer;
     border-top: solid 2px #eaeaea;
     border-left: solid 2px #eaeaea;
     border-bottom:solid 2px  #eaeaea;
     border-right: solid 2px #eaeaea;
-    padding: 5px 5px;   	
+    padding: 5px 5px;   
     }
 
-a.down {
+.down {
+	margin: 0.05em;
+	width: 4.9em;
 	color: black;
+	text-align: center;
+	cursor: pointer;
     background: #aaa;
     border-top: solid 2px #777;
     border-left: solid 2px #777;
     border-bottom: solid 2px #777;
     border-right: solid 2px #777;
+    padding: 5px 5px; 
     }
 
 td {

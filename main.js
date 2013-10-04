@@ -35,13 +35,15 @@ window.onload = function () {
 		// 1. toggle boolean value of player.isAI
 		player.isAI = !(player.isAI);
 		// 2. change css class of button
-		// TODO
+		
 		// 3. change text of button
 		if (player.isAI) {
-			document.getElementById(player.symbol + "AI").innerHTML = "COMPOOTUR";
+			document.getElementById(player.symbol + "AI").innerHTML = "RO-B0T";
+			document.getElementById(player.symbol + "AI").className = "down";
 		}
 		else {
 			document.getElementById(player.symbol + "AI").innerHTML = "HOOMIN";
+			document.getElementById(player.symbol + "AI").className = "up";
 		}
 		
 		console.log("player1 AI: " + player1.isAI);
