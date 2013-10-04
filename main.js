@@ -44,11 +44,17 @@ window.onload = function () {
 			}
 		}
 		drawBoard();
+
+	    //clear canvas elements
+		document.getElementById("chalkcanvas").innerHTML = "";
+
+        // reset game info
 		currPlayer = player1;
 		document.getElementById("turnLabel").innerHTML = "X goes first";
 		document.getElementById("gameOverButton").className = "hidden";
 		isGameOver = false;
 		
+        // let the games begin!
 		if (currPlayer.isAI) {
 		    isHumanTurn = false;
 		    AImove = getOptimalMove(virtualBoard, currPlayer.symbol);
@@ -81,7 +87,7 @@ window.onload = function () {
 	}
 	
 	var startNewGame = function() {
-		// 1. clear virtual and graphical boards
+		// clear virtual and graphical boards
 		for (var i=0; i<3; i++) {
 			for (var j=0; j<3; j++) {
 				// instantiate a "smart square" on the virtual board
@@ -89,8 +95,6 @@ window.onload = function () {
 			}
 		}
 		drawBoard();
-		
-		// 2. ask person if they want to play x's or o's
 	}
 	
 	// This function iterates over the rows, columns, and two diagonals.
@@ -105,25 +109,51 @@ window.onload = function () {
 			if (boardToCheck[row][0].symbol === boardToCheck[row][1].symbol &&
 				boardToCheck[row][1].symbol === boardToCheck[row][2].symbol &&
 				boardToCheck[row][0].symbol !== 'none') {
-				winner = boardToCheck[row][0].symbol;
+			    winner = boardToCheck[row][0].symbol;
+			    // TODO draw line across row
+			    var c = document.getElementById("chalkcanvas");
+			    var ctx = c.getContext("2d");
+			    var strokeX = (row * 100) + 50;
+			    ctx.moveTo(0, strokeX);
+			    ctx.lineTo(300, strokeX);
+			    ctx.stroke();
 			}
 		}
 		for (var col=0; col<3; col++) {
 			if (boardToCheck[0][col].symbol === boardToCheck[1][col].symbol &&
 				boardToCheck[1][col].symbol === boardToCheck[2][col].symbol &&
 				boardToCheck[0][col].symbol !== 'none') {
-				winner = boardToCheck[0][col].symbol;
+			    winner = boardToCheck[0][col].symbol;
+			    // TODO draw line down column
+			    var c = document.getElementById("chalkcanvas");
+			    var ctx = c.getContext("2d");
+			    var strokeY = (col * 100) + 50;
+			    ctx.moveTo(strokeY, 0);
+			    ctx.lineTo(strokeY, 300);
+			    ctx.stroke();
 			}
 		}
 		if (boardToCheck[0][0].symbol === boardToCheck[1][1].symbol &&		
 			boardToCheck[1][1].symbol === boardToCheck[2][2].symbol &&	
 			boardToCheck[0][0].symbol !== 'none') {
-			winner = boardToCheck[0][0].symbol;
+		    winner = boardToCheck[0][0].symbol;
+		    // TODO draw diagonal
+		    var c = document.getElementById("chalkcanvas");
+		    var ctx = c.getContext("2d");
+		    ctx.moveTo(1, 10);
+		    ctx.lineTo(289, 299);
+		    ctx.stroke();
 		}
 		else if (boardToCheck[0][2].symbol === boardToCheck[1][1].symbol &&		
 			boardToCheck[1][1].symbol === boardToCheck[2][0].symbol &&	
 			boardToCheck[0][2].symbol !== 'none') {
-			winner = boardToCheck[0][2].symbol;
+		    winner = boardToCheck[0][2].symbol;
+		    // TODO draw diagonal
+		    var c = document.getElementById("chalkcanvas");
+		    var ctx = c.getContext("2d");
+		    ctx.moveTo(299, 1);
+		    ctx.lineTo(1, 299);
+		    ctx.stroke();
 		}
 		
 		var stalemate = true; 
