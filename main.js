@@ -287,11 +287,11 @@ window.onload = function () {
 				}
 			}
 			else {
-				// TODO: play a sound?
+				// gold plating: play a sound?
 			}
 		}
 		else {
-			// TODO: flash the rematch/start over button?
+			// gold plating: flash the rematch/start over button?
 		}
 	}
 	
