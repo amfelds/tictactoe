@@ -22,17 +22,20 @@ window.onload = function () {
 		for (var i=0; i<3; i++) {
 			for (var j=0; j<3; j++) {
 				tempSymbol = virtualBoard[i][j].symbol;
+				divId = "" + i + j;
+				var tempdiv = document.getElementById(divId);
 				if (tempSymbol !== 'none') {
-					divId = "" + i + j;
-					var tempdiv = document.getElementById(divId);
 					tempdiv.innerHTML = tempSymbol;
+				}
+				else if (virtualBoard[i][j].isblank) {
+					tempdiv.innerHTML = "";
 				}
 			}
 		}
 	}
 	
 	var resetGame = function() {
-		// 1. clear virtual and graphical boards
+		// clear virtual and graphical boards
 		for (var i=0; i<3; i++) {
 			for (var j=0; j<3; j++) {
 				// instantiate a "smart square" on the virtual board
@@ -40,15 +43,15 @@ window.onload = function () {
 			}
 		}
 		drawBoard();
+		currPlayer = player1;
+		document.getElementById("turnLabel").innerHTML = "X goes first";
+		document.getElementById("gameOverButton").className = "hidden";
 		isGameOver = false;
 	}
 	
 	var togglePlayerType = function(player) {
-		// 1. toggle boolean value of player.isAI
 		player.isAI = !(player.isAI);
-		// 2. change css class of button
-		
-		// 3. change text of button
+
 		if (player.isAI) {
 			document.getElementById(player.symbol + "AI").innerHTML = "COMPOOTER";
 			document.getElementById(player.symbol + "AI").className = "down";
@@ -253,20 +256,22 @@ window.onload = function () {
 					toggleCurrentPlayer();
 				}
 				else if (winner === 'none') {
-					// TODO: it's a stalemate, alert the player, also disable clicking
-					// Also maybe disable game or show button to play again?
 					isGameOver = true;
-					document.getElementById("statuslabel").innerHTML = "It's a stalemate, mate. Play again?";
+					document.getElementById("turnLabel").innerHTML =  "Wah-wah. Stalemate!";
+					document.getElementById("gameOverButton").innerHTML = "Play again?";
+					document.getElementById("gameOverButton").className = "visible";
+					// TODO: something hidden becomes unhidden to offer rematch
 				}
 				else {
 				    isGameOver = true;
-				    document.getElementById("statuslabel").innerHTML = "Winner is " + winner + "<br />Rematch?";
-					// TODO: tell player who the winner is, disable clicking, offer a rematch
+				    document.getElementById("turnLabel").innerHTML =  "Winner is " + winner;
+				    document.getElementById("gameOverButton").innerHTML = "Rematch?";
+				    document.getElementById("gameOverButton").className = "visible";
+				    // TODO: something hidden becomes unhidden to offer rematch
 				}
 			}
 			else {
-				// TODO: display a message that says "nope, that spot is taken!"
-				alert("You can't click there!");
+				// TODO: play a sound?
 			}
 		}
 		else {
@@ -298,6 +303,13 @@ window.onload = function () {
 	};
 	document.getElementById("OAI").onclick = function() {
 		togglePlayerType(player2);
+	};
+	
+	document.getElementById("resetButton").onclick = function() {
+		return resetGame();
+	};
+	document.getElementById("gameOverButton").onclick = function() {
+		return resetGame();
 	};
 	
 	/*
