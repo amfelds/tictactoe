@@ -8,6 +8,7 @@ window.onload = function () {
 	var currPlayer = player1;
 	
 	var isGameOver = false;
+	var isHumanTurn = true;
 	
 	var virtualBoard = [];
 	virtualBoard[0] = [];
@@ -49,8 +50,12 @@ window.onload = function () {
 		isGameOver = false;
 		
 		if (currPlayer.isAI) {
-			AImove = getOptimalMove(virtualBoard, currPlayer.symbol);
-			attemptMove(AImove.row, AImove.col);
+		    isHumanTurn = false;
+		    AImove = getOptimalMove(virtualBoard, currPlayer.symbol);
+		    attemptMove(AImove.row, AImove.col);
+		}
+		else {
+		    isHumanTurn = true;
 		}
 	}
 	
@@ -67,8 +72,11 @@ window.onload = function () {
 		}
 		
 		if (currPlayer.isAI) {
+		    isHumanTurn = false;
 			moveToMake = getOptimalMove(virtualBoard, currPlayer.symbol);
-			setTimeout(function() {attemptMove(moveToMake.row, moveToMake.col);}, 900);
+			setTimeout(function () {
+			    attemptMove(moveToMake.row, moveToMake.col);
+			}, 900);
 		}
 	}
 	
@@ -232,12 +240,21 @@ window.onload = function () {
 		else {
 			currPlayer = player1;
 		}
+
+		if (currPlayer.isAI) {
+		    isHumanTurn = false;
+		}
+		else {
+		    isHumanTurn = true;
+		}
 		
 		document.getElementById("turnLabel").innerHTML = currPlayer.symbol + "'s turn";
 		
 		if (currPlayer.isAI) {
 			AImove = getOptimalMove(virtualBoard, currPlayer.symbol);
-			setTimeout(function() {attemptMove(AImove.row, AImove.col);}, 900);
+			setTimeout(function () {
+			    attemptMove(AImove.row, AImove.col);
+			}, 900);
 		}
 	}
 	
@@ -261,14 +278,12 @@ window.onload = function () {
 					document.getElementById("turnLabel").innerHTML =  "Stalemate!";
 					document.getElementById("gameOverButton").innerHTML = "Play again?";
 					document.getElementById("gameOverButton").className = "visible";
-					// TODO: something hidden becomes unhidden to offer rematch
 				}
 				else {
 				    isGameOver = true;
 				    document.getElementById("turnLabel").innerHTML =  "Winner is " + winner;
 				    document.getElementById("gameOverButton").innerHTML = "Rematch?";
 				    document.getElementById("gameOverButton").className = "visible";
-				    // TODO: something hidden becomes unhidden to offer rematch
 				}
 			}
 			else {
@@ -292,8 +307,10 @@ window.onload = function () {
 			tempdiv.onclick = function() {
 				var row = i;
 				var col = j;
-				return function() {
-					attemptMove(row, col); 
+				return function () {
+				    if (isHumanTurn) {
+				        attemptMove(row, col);
+				    }
 				}
 			}();
 		}
