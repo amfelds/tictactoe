@@ -3,8 +3,8 @@ window.onload = function () {
 	 * INSTANTIATE the global(ish) variables
 	 */
 
-	var player1 = {symbol: 'X', isAI: 'false'}
-	var player2 = {symbol: 'O', isAI: 'true'}
+	var player1 = {symbol: 'X', isAI: false}
+	var player2 = {symbol: 'O', isAI: false}
 	var currPlayer = player1;
 	
 	var isGameOver = false;
@@ -47,6 +47,11 @@ window.onload = function () {
 		document.getElementById("turnLabel").innerHTML = "X goes first";
 		document.getElementById("gameOverButton").className = "hidden";
 		isGameOver = false;
+		
+		if (currPlayer.isAI) {
+			AImove = getOptimalMove(virtualBoard, currPlayer.symbol);
+			attemptMove(AImove.row, AImove.col);
+		}
 	}
 	
 	var togglePlayerType = function(player) {
@@ -63,6 +68,11 @@ window.onload = function () {
 		
 		console.log("player1 AI: " + player1.isAI);
 		console.log("player2 AI: " + player2.isAI);
+		
+		if (currPlayer.isAI) {
+			moveToMake = getOptimalMove(virtualBoard, currPlayer.symbol);
+			attemptMove(moveToMake.row, moveToMake.col);
+		}
 	}
 	
 	var startNewGame = function() {
@@ -153,8 +163,8 @@ window.onload = function () {
     // For debugging purposes, it takes in a symbol that is set to true only if it's a recursive call
 	var getOptimalMove = function(board, symbol) {
 	    // 1. for each blank space (e.g. possible move)
-	    var bestMove = { result: 'none', moveRow: -1, moveCol: -1 };
-	    var worstMove = { result: 'none', moveRow: -1, moveCol: -1};
+	    var bestMove = { result: 'none', row: -1, col: -1 };
+	    var worstMove = { result: 'none', row: -1, col: -1};
 
 		for (var i=0; i<3; i++) {
 			for (var j=0; j<3; j++) {
@@ -167,15 +177,15 @@ window.onload = function () {
 					// 	1.a.i if input symbol won, return "won!" + move
 					if (moveResult === symbol) {
 						bestMove.result = 'won';
-						bestMove.moveRow = i;
-						bestMove.moveCol = j;
+						bestMove.row = i;
+						bestMove.col = j;
 						return bestMove;
 					}
 					//	1.a.ii if board is at a stalemate, return "stalemate" + move
 					else if (moveResult === 'none') {
 						bestMove.result = "stalemate";
-						bestMove.moveRow = i;
-						bestMove.moveCol = j;
+						bestMove.row = i;
+						bestMove.col = j;
 					}
 					else if (moveResult === 'not over') {
 					//	1.a.iv if game is not over, recursively call "makeOptimalMove" with current copy of board and opposite symbol; return "lost" if it returns "won" or "stalemate" + move if it returns "stalemate"
@@ -186,25 +196,25 @@ window.onload = function () {
 						var opponentOptimalMove = getOptimalMove(boardCopy, opponentSymbol, true);
 						if (opponentOptimalMove.result === 'lost') {
 							bestMove.result = 'won';
-							bestMove.moveRow = i;
-							bestMove.moveCol = j;
+							bestMove.row = i;
+							bestMove.col = j;
 							return bestMove;
 						}
 						else if (opponentOptimalMove.result === 'stalemate') {
 							bestMove.result = 'stalemate';
-							bestMove.moveRow = i;
-							bestMove.moveCol = j;
+							bestMove.row = i;
+							bestMove.col = j;
 						}
 						else {
 						    worstMove.result = 'lost';
-						    worstMove.moveRow = i;
-						    worstMove.moveCol = j;
+						    worstMove.row = i;
+						    worstMove.col = j;
 						}
 					}
 					else {
 					    worstMove.result = 'lost';
-					    worstMove.moveRow = i;
-					    worstMove.moveCol = j;
+					    worstMove.row = i;
+					    worstMove.col = j;
 					}
 				}
 			}
@@ -212,31 +222,28 @@ window.onload = function () {
 
 		if (bestMove.result === 'none') {
 		    bestMove.result = worstMove.result;
-		    bestMove.moveRow = worstMove.moveRow;
-		    bestMove.moveCol = worstMove.moveCol;
+		    bestMove.row = worstMove.row;
+		    bestMove.col = worstMove.col;
 		}
 
 		return bestMove;
 	}
 	
 	var toggleCurrentPlayer = function() {
-		// TODO for now, all players are not AI
 		if (currPlayer === player1) {
 			currPlayer = player2;
 		}
 		else {
 			currPlayer = player1;
+			console.log("currPlayer: " + currPlayer.symbol + ", " + currPlayer.isAI);
 		}
 		
 		document.getElementById("turnLabel").innerHTML = currPlayer.symbol + "'s turn";
 		
-		if (currPlayer.isAI === 'true') {
+		if (currPlayer.isAI) {
 			AImove = getOptimalMove(virtualBoard, currPlayer.symbol);
-			attemptMove(AImove.moveRow, AImove.moveCol);
+			attemptMove(AImove.row, AImove.col);
 		}
-		
-		console.log("player1 AI: " + player1.isAI);
-		console.log("player2 AI: " + player2.isAI);
 	}
 	
 	var attemptMove = function (row, col) {
