@@ -26,15 +26,60 @@ table
 	text-align: center;
 }
 
+.up 
+{
+	margin: auto;
+	width: 6.4em;
+	color: black;
+	text-align: center;
+	cursor: pointer;
+    background: #ccc;
+    border-top: solid 2px #eaeaea;
+    border-left: solid 2px #eaeaea;
+    border-bottom:solid 2px  #eaeaea;
+    border-right: solid 2px #eaeaea;
+    padding: 5px 5px;   
+}
+
+.down 
+{
+	margin: auto;
+	width: 6.4em;
+	color: black;
+	text-align: center;
+	cursor: pointer;
+    background: #aaa;
+    border-top: solid 2px #777;
+    border-left: solid 2px #777;
+    border-bottom: solid 2px #777;
+    border-right: solid 2px #777;
+    padding: 5px 5px; 
+}
+
+#resetButton:hover
+{
+	background-color: blue;
+}
+
 #header
 {
-    text-align: center;
     margin: 20px;
     outline: white dashed 1px;
+    clear: left;
+}
+
+#resetButton
+{
+	width: 10em;
+	background-color: red;
+	border: pink;
+	text-align: center;
+	cursor: pointer;
 }
 
 #content
 {
+	clear: left;
     width: 65%;
     height: 450px;
 	margin: 0 auto;

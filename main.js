@@ -31,6 +31,18 @@ window.onload = function () {
 		}
 	}
 	
+	var resetGame = function() {
+		// 1. clear virtual and graphical boards
+		for (var i=0; i<3; i++) {
+			for (var j=0; j<3; j++) {
+				// instantiate a "smart square" on the virtual board
+				virtualBoard[i][j] = {isblank: 'true', symbol: 'none'}
+			}
+		}
+		drawBoard();
+		isGameOver = false;
+	}
+	
 	var togglePlayerType = function(player) {
 		// 1. toggle boolean value of player.isAI
 		player.isAI = !(player.isAI);
@@ -38,7 +50,7 @@ window.onload = function () {
 		
 		// 3. change text of button
 		if (player.isAI) {
-			document.getElementById(player.symbol + "AI").innerHTML = "RO-B0T";
+			document.getElementById(player.symbol + "AI").innerHTML = "COMPOOTER";
 			document.getElementById(player.symbol + "AI").className = "down";
 		}
 		else {
